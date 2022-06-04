@@ -17,7 +17,23 @@
 #define IDC_STATIC				-1
 #endif
 // Następne wartości domyślne dla nowych obiektów
-//
+
+#define ID_BUTTON12				112
+#define ID_BUTTON13				113
+#define ID_BUTTON14				114
+
+#define ID_BUTTON21				121
+#define ID_BUTTON23				123
+#define ID_BUTTON24				124
+
+#define ID_BUTTON31				131
+#define ID_BUTTON32				132
+#define ID_BUTTON34				134
+
+#define ID_BUTTON41				141
+#define ID_BUTTON42				142
+#define ID_BUTTON43				143
+
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 
