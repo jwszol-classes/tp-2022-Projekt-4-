@@ -21,49 +21,95 @@ INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
 void rysowanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2) {
 
-    for (int i = y1 * 100; i < y2 * 100; i++) {
-        InvalidateRect(hWnd, NULL, TRUE);
-        hdc = BeginPaint(hWnd, &ps);
-        HPEN hLinePen;
-        COLORREF qLineColor;
-        HPEN hPenOld;
-        qLineColor = RGB(0, 0, 0);
-        hLinePen = CreatePen(PS_SOLID, 5, qLineColor);
-        hPenOld = (HPEN)SelectObject(hdc, hLinePen);
+    if (y2 > y1) {
+        for (int i = y1 * 100; i < y2 * 100; i++) {
+            InvalidateRect(hWnd, NULL, TRUE);
+            hdc = BeginPaint(hWnd, &ps);
+            HPEN hLinePen;
+            COLORREF qLineColor;
+            HPEN hPenOld;
+            qLineColor = RGB(0, 0, 0);
+            hLinePen = CreatePen(PS_SOLID, 5, qLineColor);
+            hPenOld = (HPEN)SelectObject(hdc, hLinePen);
 
-        //platforma
-        MoveToEx(hdc, 410, i + 100 , NULL);
-        LineTo(hdc, 590, i + 100);
+            //platforma
+            MoveToEx(hdc, 410, i + 100, NULL);
+            LineTo(hdc, 590, i + 100);
 
-        MoveToEx(hdc, 410, i-10 , NULL);
-        LineTo(hdc, 590, i-10);
+            MoveToEx(hdc, 410, i - 10, NULL);
+            LineTo(hdc, 590, i - 10);
 
-        MoveToEx(hdc, 410, i + 100, NULL);
-        LineTo(hdc, 410, i - 10);
+            MoveToEx(hdc, 410, i + 100, NULL);
+            LineTo(hdc, 410, i - 10);
 
-        MoveToEx(hdc, 590, i + 100, NULL);
-        LineTo(hdc, 590, i - 10);
+            MoveToEx(hdc, 590, i + 100, NULL);
+            LineTo(hdc, 590, i - 10);
 
-        //pierwsze
-        MoveToEx(hdc, 100, 200, NULL);
-        LineTo(hdc, 400, 200);
-        //drugie
-        MoveToEx(hdc, 600, 300, NULL);
-        LineTo(hdc, 900, 300);
-        //trzecie
-        MoveToEx(hdc, 100, 400, NULL);
-        LineTo(hdc, 400, 400);
-        //czwarte
-        MoveToEx(hdc, 600, 500, NULL);
-        LineTo(hdc, 900, 500);
+            //pierwsze
+            MoveToEx(hdc, 100, 200, NULL);
+            LineTo(hdc, 400, 200);
+            //drugie
+            MoveToEx(hdc, 600, 300, NULL);
+            LineTo(hdc, 900, 300);
+            //trzecie
+            MoveToEx(hdc, 100, 400, NULL);
+            LineTo(hdc, 400, 400);
+            //czwarte
+            MoveToEx(hdc, 600, 500, NULL);
+            LineTo(hdc, 900, 500);
 
-        SelectObject(hdc, hPenOld);
-        DeleteObject(hLinePen);
+            SelectObject(hdc, hPenOld);
+            DeleteObject(hLinePen);
 
-
-        EndPaint(hWnd, &ps);
-        Sleep(1);
+            EndPaint(hWnd, &ps);
+            Sleep(1);
+        }
     }
+    else {
+        for (int i = y1 * 100; i > y2 * 100; i--) {
+            InvalidateRect(hWnd, NULL, TRUE);
+            hdc = BeginPaint(hWnd, &ps);
+            HPEN hLinePen;
+            COLORREF qLineColor;
+            HPEN hPenOld;
+            qLineColor = RGB(0, 0, 0);
+            hLinePen = CreatePen(PS_SOLID, 5, qLineColor);
+            hPenOld = (HPEN)SelectObject(hdc, hLinePen);
+
+            //platforma
+            MoveToEx(hdc, 410, i + 100, NULL);
+            LineTo(hdc, 590, i + 100);
+
+            MoveToEx(hdc, 410, i - 10, NULL);
+            LineTo(hdc, 590, i - 10);
+
+            MoveToEx(hdc, 410, i + 100, NULL);
+            LineTo(hdc, 410, i - 10);
+
+            MoveToEx(hdc, 590, i + 100, NULL);
+            LineTo(hdc, 590, i - 10);
+
+            //pierwsze
+            MoveToEx(hdc, 100, 200, NULL);
+            LineTo(hdc, 400, 200);
+            //drugie
+            MoveToEx(hdc, 600, 300, NULL);
+            LineTo(hdc, 900, 300);
+            //trzecie
+            MoveToEx(hdc, 100, 400, NULL);
+            LineTo(hdc, 400, 400);
+            //czwarte
+            MoveToEx(hdc, 600, 500, NULL);
+            LineTo(hdc, 900, 500);
+
+            SelectObject(hdc, hPenOld);
+            DeleteObject(hLinePen);
+
+            EndPaint(hWnd, &ps);
+            Sleep(1);
+        }
+    }
+
 }
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
