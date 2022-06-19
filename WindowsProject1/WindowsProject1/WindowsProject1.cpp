@@ -19,10 +19,9 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
+void rysowanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2) {
 
-void ryswoanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2) {
-
-    for (int i = y1*100; i < y2*100; i++) {
+    for (int i = y1 * 100; i < y2 * 100; i++) {
         InvalidateRect(hWnd, NULL, TRUE);
         hdc = BeginPaint(hWnd, &ps);
         HPEN hLinePen;
@@ -35,6 +34,16 @@ void ryswoanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2) {
         //platforma
         MoveToEx(hdc, 410, i + 100 , NULL);
         LineTo(hdc, 590, i + 100);
+
+        MoveToEx(hdc, 410, i-10 , NULL);
+        LineTo(hdc, 590, i-10);
+
+        MoveToEx(hdc, 410, i + 100, NULL);
+        LineTo(hdc, 410, i - 10);
+
+        MoveToEx(hdc, 590, i + 100, NULL);
+        LineTo(hdc, 590, i - 10);
+
         //pierwsze
         MoveToEx(hdc, 100, 200, NULL);
         LineTo(hdc, 400, 200);
@@ -53,7 +62,6 @@ void ryswoanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2) {
 
 
         EndPaint(hWnd, &ps);
-        i++;
         Sleep(1);
     }
 }
@@ -314,31 +322,40 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 DestroyWindow(hWnd);
                 break;
             case ID_BUTTON12:
-                ryswoanie(hWnd, hdc, ps,1,2);
+                rysowanie(hWnd, hdc, ps,1,2);
                 break;
             case ID_BUTTON13:
-                //przesun wiunda z 1 na 3
+                rysowanie(hWnd, hdc, ps, 1, 3);
                 break;
             case ID_BUTTON14:
-                //przesun wiunda z 1 na 4
+                rysowanie(hWnd, hdc, ps, 1, 4);
                 break;
             case ID_BUTTON21:
-                //przesun wiunda z 2 na 1
+                rysowanie(hWnd, hdc, ps, 2, 1);
                 break;
             case ID_BUTTON23:
-                //przesun wiunda z 2 na 3
+                rysowanie(hWnd, hdc, ps, 2, 3);
                 break;
             case ID_BUTTON24:
-                //przesun wiunda z 2 na 4
+                rysowanie(hWnd, hdc, ps, 2, 4);
+                break;
+            case ID_BUTTON31:
+                rysowanie(hWnd, hdc, ps, 3, 1);
+                break;
+            case ID_BUTTON32:
+                rysowanie(hWnd, hdc, ps, 3, 2);
+                break;
+            case ID_BUTTON34:
+                rysowanie(hWnd, hdc, ps, 3, 4);
                 break;
             case ID_BUTTON41:
-                //przesun wiunda z 4 na 1
+                rysowanie(hWnd, hdc, ps, 4, 1);
                 break;
             case ID_BUTTON42:
-                //przesun wiunda z 4 na 2
+                rysowanie(hWnd, hdc, ps, 4, 2);
                 break;
             case ID_BUTTON43:
-                //przesun wiunda z 4 na 3
+                rysowanie(hWnd, hdc, ps, 4, 3);
                 break;
             default:
                 return DefWindowProc(hWnd, message, wParam, lParam);
