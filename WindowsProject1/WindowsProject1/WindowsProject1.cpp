@@ -349,6 +349,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+    int AktualnaPozycja;
     int wmId, wmEvent;
     PAINTSTRUCT ps;
     HDC hdc;
@@ -419,11 +420,24 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             HPEN pierwsze;
             COLORREF Color1;
             Color1 = RGB(0, 0, 0);
-            pierwsze = CreatePen(PS_SOLID, 7, Color1);
+            pierwsze = CreatePen(PS_SOLID, 5, Color1);
             hPenOld = (HPEN)SelectObject(hdc, pierwsze);
 
             MoveToEx(hdc, 100, 200, NULL);
             LineTo(hdc, 400, 200);
+
+            //platforma
+            MoveToEx(hdc, 410, 100 + 100, NULL);
+            LineTo(hdc, 590, 100 + 100);
+
+            MoveToEx(hdc, 410, 100 - 10, NULL);
+            LineTo(hdc, 590, 100 - 10);
+
+            MoveToEx(hdc, 410, 100 + 100, NULL);
+            LineTo(hdc, 410, 100 - 10);
+
+            MoveToEx(hdc, 590, 100 + 100, NULL);
+            LineTo(hdc, 590, 100 - 10);
 
             SelectObject(hdc, hPenOld);
             DeleteObject(pierwsze);
@@ -431,7 +445,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // 2. pietro
             HPEN drugie;
             Color1 = RGB(0, 0, 0);
-            drugie = CreatePen(PS_SOLID, 7, Color1);
+            drugie = CreatePen(PS_SOLID, 5, Color1);
             hPenOld = (HPEN)SelectObject(hdc, drugie);
 
             MoveToEx(hdc, 600, 300, NULL);
@@ -443,7 +457,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // 3. pietro
             HPEN trzecie;
             Color1 = RGB(0, 0, 0);
-            trzecie = CreatePen(PS_SOLID, 7, Color1);
+            trzecie = CreatePen(PS_SOLID, 5, Color1);
             hPenOld = (HPEN)SelectObject(hdc, trzecie);
 
             MoveToEx(hdc, 100, 400, NULL);
@@ -455,7 +469,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // 4. pietro
             HPEN hLinePen;
             Color1 = RGB(0, 0, 0);
-            hLinePen = CreatePen(PS_SOLID, 7, Color1);
+            hLinePen = CreatePen(PS_SOLID, 5, Color1);
             hPenOld = (HPEN)SelectObject(hdc, hLinePen);
 
             MoveToEx(hdc, 600, 500, NULL);
