@@ -19,6 +19,45 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
+
+void ryswoanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2) {
+
+    for (int i = y1*100; i < y2*100; i++) {
+        InvalidateRect(hWnd, NULL, TRUE);
+        hdc = BeginPaint(hWnd, &ps);
+        HPEN hLinePen;
+        COLORREF qLineColor;
+        HPEN hPenOld;
+        qLineColor = RGB(0, 0, 0);
+        hLinePen = CreatePen(PS_SOLID, 5, qLineColor);
+        hPenOld = (HPEN)SelectObject(hdc, hLinePen);
+
+        //platforma
+        MoveToEx(hdc, 410, i + 100 , NULL);
+        LineTo(hdc, 590, i + 100);
+        //pierwsze
+        MoveToEx(hdc, 100, 200, NULL);
+        LineTo(hdc, 400, 200);
+        //drugie
+        MoveToEx(hdc, 600, 300, NULL);
+        LineTo(hdc, 900, 300);
+        //trzecie
+        MoveToEx(hdc, 100, 400, NULL);
+        LineTo(hdc, 400, 400);
+        //czwarte
+        MoveToEx(hdc, 600, 500, NULL);
+        LineTo(hdc, 900, 500);
+
+        SelectObject(hdc, hPenOld);
+        DeleteObject(hLinePen);
+
+
+        EndPaint(hWnd, &ps);
+        i++;
+        Sleep(1);
+    }
+}
+
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
                      _In_ LPWSTR    lpCmdLine,
@@ -256,6 +295,10 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+    int wmId, wmEvent;
+    PAINTSTRUCT ps;
+    HDC hdc;
+
     switch (message)
     {
     case WM_COMMAND:
@@ -271,7 +314,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 DestroyWindow(hWnd);
                 break;
             case ID_BUTTON12:
-                //przesun wiunda z 1 na 2
+                ryswoanie(hWnd, hdc, ps,1,2);
                 break;
             case ID_BUTTON13:
                 //przesun wiunda z 1 na 3
