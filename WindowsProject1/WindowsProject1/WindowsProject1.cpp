@@ -19,6 +19,8 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
+int AktualnaPozycja = 1;
+
 void rysowanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2) {
 
     if (y2 > y1) {
@@ -349,7 +351,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-    int AktualnaPozycja;
+
     int wmId, wmEvent;
     PAINTSTRUCT ps;
     HDC hdc;
@@ -369,39 +371,75 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 DestroyWindow(hWnd);
                 break;
             case ID_BUTTON12:
+                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 1);
+                AktualnaPozycja = 2;
+                Sleep(200);
                 rysowanie(hWnd, hdc, ps,1,2);
                 break;
             case ID_BUTTON13:
+                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 1);
+                AktualnaPozycja = 3;
+                Sleep(200);
                 rysowanie(hWnd, hdc, ps, 1, 3);
                 break;
             case ID_BUTTON14:
+                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 1);
+                AktualnaPozycja = 4;
+                Sleep(200);
                 rysowanie(hWnd, hdc, ps, 1, 4);
                 break;
             case ID_BUTTON21:
+                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 2);
+                AktualnaPozycja = 1;
+                Sleep(200);
                 rysowanie(hWnd, hdc, ps, 2, 1);
                 break;
             case ID_BUTTON23:
+                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 2);
+                AktualnaPozycja = 3;
+                Sleep(200);
                 rysowanie(hWnd, hdc, ps, 2, 3);
                 break;
             case ID_BUTTON24:
+                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 2);
+                AktualnaPozycja = 4;
+                Sleep(200);
                 rysowanie(hWnd, hdc, ps, 2, 4);
                 break;
             case ID_BUTTON31:
+                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 3);
+                AktualnaPozycja = 1;
+                Sleep(200);
                 rysowanie(hWnd, hdc, ps, 3, 1);
                 break;
             case ID_BUTTON32:
+                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 3);
+                AktualnaPozycja = 2;
+                Sleep(200);
                 rysowanie(hWnd, hdc, ps, 3, 2);
                 break;
             case ID_BUTTON34:
+                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 3);
+                AktualnaPozycja = 4;
+                Sleep(200);
                 rysowanie(hWnd, hdc, ps, 3, 4);
                 break;
             case ID_BUTTON41:
+                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 4);
+                AktualnaPozycja = 1;
+                Sleep(200);
                 rysowanie(hWnd, hdc, ps, 4, 1);
                 break;
             case ID_BUTTON42:
+                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 4);
+                AktualnaPozycja = 2;
+                Sleep(200);
                 rysowanie(hWnd, hdc, ps, 4, 2);
                 break;
             case ID_BUTTON43:
+                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 4);
+                AktualnaPozycja = 3;
+                Sleep(200);
                 rysowanie(hWnd, hdc, ps, 4, 3);
                 break;
             default:
