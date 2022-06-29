@@ -3,6 +3,7 @@
 
 #include "framework.h"
 #include "WindowsProject1.h"
+#include "ctime"
 
 #define MAX_LOADSTRING 100
 
@@ -20,8 +21,17 @@ LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
 int AktualnaPozycja = 1;
+int dokadjedzie[4];
 
-void rysowanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2) {
+void LosowanieOsoby(int dokadjedzie[4]){
+    for (int i = 0; i < 4; i++) {
+        dokadjedzie[i] = rand() % 4 + 1;
+        if (dokadjedzie[i] == i) i--;
+    }
+}
+
+void rysowanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2, int dokadjedzie[4]) {
+    int ktoryPojechal = -1;
 
     if (y2 > y1) {
         for (int i = y1 * 100; i < y2 * 100; i++) {
@@ -31,7 +41,7 @@ void rysowanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2) {
             COLORREF qLineColor;
             HPEN hPenOld;
             qLineColor = RGB(0, 0, 0);
-            hLinePen = CreatePen(PS_SOLID, 5, qLineColor);
+            hLinePen = CreatePen(PS_SOLID, 2, qLineColor);
             hPenOld = (HPEN)SelectObject(hdc, hLinePen);
 
             //platforma
@@ -59,6 +69,67 @@ void rysowanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2) {
             //czwarte
             MoveToEx(hdc, 600, 500, NULL);
             LineTo(hdc, 900, 500);
+
+
+            //osoby z 1
+            hLinePen = CreatePen(PS_SOLID, 2, qLineColor);
+            hPenOld = (HPEN)SelectObject(hdc, hLinePen);
+            if (dokadjedzie[0] != -1) {
+                if (dokadjedzie[0] == y2 && y1==1) {
+                    MoveToEx(hdc, 500, i + 100, NULL);
+                    LineTo(hdc, 500, i + 20);
+                    ktoryPojechal = 0;
+                }
+                else {
+                    MoveToEx(hdc, 200, 120, NULL);
+                    LineTo(hdc, 200, 200);
+                }
+            }
+
+            //osoby z 2
+            hLinePen = CreatePen(PS_SOLID, 2, qLineColor);
+            hPenOld = (HPEN)SelectObject(hdc, hLinePen);
+            if (dokadjedzie[1] != -1) {
+                if (dokadjedzie[1] == y2 && y1 == 2) {
+                    MoveToEx(hdc, 500, i + 100, NULL);
+                    LineTo(hdc, 500, i + 20);
+                    ktoryPojechal = 1;
+                }
+                else {
+                    MoveToEx(hdc, 750, 220, NULL);
+                    LineTo(hdc, 750, 300);
+                }
+            }
+
+            //osoby z 3
+            hLinePen = CreatePen(PS_SOLID, 2, qLineColor);
+            hPenOld = (HPEN)SelectObject(hdc, hLinePen);
+            if (dokadjedzie[2] != -1) {
+                if (dokadjedzie[2] == y2 && y1 == 3) {
+                    MoveToEx(hdc, 500, i + 100, NULL);
+                    LineTo(hdc, 500, i + 20);
+                    ktoryPojechal = 2;
+                }
+                else {
+                    MoveToEx(hdc, 200, 320, NULL);
+                    LineTo(hdc, 200, 400);
+                }
+            }
+
+            //osoby z 4
+            hLinePen = CreatePen(PS_SOLID, 2, qLineColor);
+            hPenOld = (HPEN)SelectObject(hdc, hLinePen);
+            if (dokadjedzie[3] != -1) {
+                if (dokadjedzie[3] == y2 && y1 == 4) {
+                    MoveToEx(hdc, 500, i + 100, NULL);
+                    LineTo(hdc, 500, i + 20);
+                    ktoryPojechal = 3;
+                }
+                else {
+                    MoveToEx(hdc, 750, 420, NULL);
+                    LineTo(hdc, 750, 500);
+                }
+            }
 
             SelectObject(hdc, hPenOld);
             DeleteObject(hLinePen);
@@ -72,10 +143,13 @@ void rysowanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2) {
             InvalidateRect(hWnd, NULL, TRUE);
             hdc = BeginPaint(hWnd, &ps);
             HPEN hLinePen;
-            COLORREF qLineColor;
+            COLORREF qLineColor, qLineColor2, qLineColor3, qLineColor4;
             HPEN hPenOld;
             qLineColor = RGB(0, 0, 0);
-            hLinePen = CreatePen(PS_SOLID, 5, qLineColor);
+            qLineColor2 = RGB(255, 0, 0);
+            qLineColor3 = RGB(0, 255, 0);
+            qLineColor4 = RGB(0, 0, 255);
+            hLinePen = CreatePen(PS_SOLID, 2, qLineColor);
             hPenOld = (HPEN)SelectObject(hdc, hLinePen);
 
             //platforma
@@ -104,6 +178,67 @@ void rysowanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2) {
             MoveToEx(hdc, 600, 500, NULL);
             LineTo(hdc, 900, 500);
 
+
+            //osoby z 1
+            hLinePen = CreatePen(PS_SOLID, 2, qLineColor);
+            hPenOld = (HPEN)SelectObject(hdc, hLinePen);
+            if (dokadjedzie[0] != -1) {
+                if (dokadjedzie[0] == y2 && y1 == 1) {
+                    MoveToEx(hdc, 500, i + 100, NULL);
+                    LineTo(hdc, 500, i + 20);
+                    ktoryPojechal = 0;
+                }
+                else {
+                    MoveToEx(hdc, 200, 120, NULL);
+                    LineTo(hdc, 200, 200);
+                }
+            }
+
+            //osoby z 2
+            hLinePen = CreatePen(PS_SOLID, 2, qLineColor);
+            hPenOld = (HPEN)SelectObject(hdc, hLinePen);
+            if (dokadjedzie[1] != -1) {
+                if (dokadjedzie[1] == y2 && y1 == 2) {
+                    MoveToEx(hdc, 500, i + 100, NULL);
+                    LineTo(hdc, 500, i + 20);
+                    ktoryPojechal = 1;
+                }
+                else {
+                    MoveToEx(hdc, 750, 220, NULL);
+                    LineTo(hdc, 750, 300);
+                }
+            }
+
+            //osoby z 3
+            hLinePen = CreatePen(PS_SOLID, 2, qLineColor);
+            hPenOld = (HPEN)SelectObject(hdc, hLinePen);
+            if (dokadjedzie[2] != -1) {
+                if (dokadjedzie[2] == y2 && y1 == 3) {
+                    MoveToEx(hdc, 500, i + 100, NULL);
+                    LineTo(hdc, 500, i + 20);
+                    ktoryPojechal = 2;
+                }
+                else {
+                    MoveToEx(hdc, 200, 320, NULL);
+                    LineTo(hdc, 200, 400);
+                }
+            }
+
+            //osoby z 4
+            hLinePen = CreatePen(PS_SOLID, 2, qLineColor);
+            hPenOld = (HPEN)SelectObject(hdc, hLinePen);
+            if (dokadjedzie[3] != -1) {
+                if (dokadjedzie[3] == y2 && y1 == 4) {
+                    MoveToEx(hdc, 500, i + 100, NULL);
+                    LineTo(hdc, 500, i + 20);
+                    ktoryPojechal = 3;
+                }
+                else {
+                    MoveToEx(hdc, 750, 420, NULL);
+                    LineTo(hdc, 750, 500);
+                }
+            }
+
             SelectObject(hdc, hPenOld);
             DeleteObject(hLinePen);
 
@@ -112,6 +247,7 @@ void rysowanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2) {
         }
     }
 
+    dokadjedzie[ktoryPojechal] = -1;
 }
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
@@ -123,6 +259,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(lpCmdLine);
 
     // TODO: W tym miejscu umieść kod.
+
+    srand(time(0));
+    LosowanieOsoby(dokadjedzie);
 
     // Inicjuj ciągi globalne
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
@@ -371,76 +510,76 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 DestroyWindow(hWnd);
                 break;
             case ID_BUTTON12:
-                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 1);
+                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 1, dokadjedzie);
                 AktualnaPozycja = 2;
                 Sleep(200);
-                rysowanie(hWnd, hdc, ps,1,2);
+                rysowanie(hWnd, hdc, ps,1,2, dokadjedzie);
                 break;
             case ID_BUTTON13:
-                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 1);
+                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 1, dokadjedzie);
                 AktualnaPozycja = 3;
                 Sleep(200);
-                rysowanie(hWnd, hdc, ps, 1, 3);
+                rysowanie(hWnd, hdc, ps, 1, 3, dokadjedzie);
                 break;
             case ID_BUTTON14:
-                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 1);
+                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 1, dokadjedzie);
                 AktualnaPozycja = 4;
                 Sleep(200);
-                rysowanie(hWnd, hdc, ps, 1, 4);
+                rysowanie(hWnd, hdc, ps, 1, 4, dokadjedzie);
                 break;
             case ID_BUTTON21:
-                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 2);
+                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 2, dokadjedzie);
                 AktualnaPozycja = 1;
                 Sleep(200);
-                rysowanie(hWnd, hdc, ps, 2, 1);
+                rysowanie(hWnd, hdc, ps, 2, 1, dokadjedzie);
                 break;
             case ID_BUTTON23:
-                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 2);
+                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 2, dokadjedzie);
                 AktualnaPozycja = 3;
                 Sleep(200);
-                rysowanie(hWnd, hdc, ps, 2, 3);
+                rysowanie(hWnd, hdc, ps, 2, 3, dokadjedzie);
                 break;
             case ID_BUTTON24:
-                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 2);
+                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 2, dokadjedzie);
                 AktualnaPozycja = 4;
                 Sleep(200);
-                rysowanie(hWnd, hdc, ps, 2, 4);
+                rysowanie(hWnd, hdc, ps, 2, 4, dokadjedzie);
                 break;
             case ID_BUTTON31:
-                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 3);
+                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 3, dokadjedzie);
                 AktualnaPozycja = 1;
                 Sleep(200);
-                rysowanie(hWnd, hdc, ps, 3, 1);
+                rysowanie(hWnd, hdc, ps, 3, 1, dokadjedzie);
                 break;
             case ID_BUTTON32:
-                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 3);
+                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 3, dokadjedzie);
                 AktualnaPozycja = 2;
                 Sleep(200);
-                rysowanie(hWnd, hdc, ps, 3, 2);
+                rysowanie(hWnd, hdc, ps, 3, 2, dokadjedzie);
                 break;
             case ID_BUTTON34:
-                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 3);
+                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 3, dokadjedzie);
                 AktualnaPozycja = 4;
                 Sleep(200);
-                rysowanie(hWnd, hdc, ps, 3, 4);
+                rysowanie(hWnd, hdc, ps, 3, 4, dokadjedzie);
                 break;
             case ID_BUTTON41:
-                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 4);
+                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 4, dokadjedzie);
                 AktualnaPozycja = 1;
                 Sleep(200);
-                rysowanie(hWnd, hdc, ps, 4, 1);
+                rysowanie(hWnd, hdc, ps, 4, 1, dokadjedzie);
                 break;
             case ID_BUTTON42:
-                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 4);
+                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 4, dokadjedzie);
                 AktualnaPozycja = 2;
                 Sleep(200);
-                rysowanie(hWnd, hdc, ps, 4, 2);
+                rysowanie(hWnd, hdc, ps, 4, 2, dokadjedzie);
                 break;
             case ID_BUTTON43:
-                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 4);
+                rysowanie(hWnd, hdc, ps, AktualnaPozycja, 4, dokadjedzie);
                 AktualnaPozycja = 3;
                 Sleep(200);
-                rysowanie(hWnd, hdc, ps, 4, 3);
+                rysowanie(hWnd, hdc, ps, 4, 3, dokadjedzie);
                 break;
             default:
                 return DefWindowProc(hWnd, message, wParam, lParam);
@@ -458,7 +597,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             HPEN pietra;
             COLORREF Color1;
             Color1 = RGB(0, 0, 0);
-            pietra = CreatePen(PS_SOLID, 5, Color1);
+            pietra = CreatePen(PS_SOLID, 2, Color1);
             hPenOld = (HPEN)SelectObject(hdc, pietra);
 
             MoveToEx(hdc, 100, 200, NULL);
