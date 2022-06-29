@@ -214,7 +214,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
         NULL);
 
     hwndButton = CreateWindow(TEXT("button"),                      // The class name required is button
-        TEXT("3"),                  // the caption of the button
+        TEXT("1"),                  // the caption of the button
         WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,  // the styles
         100, 85,                                  // the left and top co-ordinates
         30, 30,                              // width and height
@@ -224,7 +224,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
         NULL);
 
     hwndButton = CreateWindow(TEXT("button"),                      // The class name required is button
-        TEXT("4"),                  // the caption of the button
+        TEXT("0"),                  // the caption of the button
         WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,  // the styles
         100, 120,                                  // the left and top co-ordinates
         30, 30,                              // width and height
@@ -236,7 +236,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
 
     hwndButton = CreateWindow(TEXT("button"),                      // The class name required is button
-        TEXT("1"),                  // the caption of the button
+        TEXT("3"),                  // the caption of the button
         WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,  // the styles
         850, 120,                                  // the left and top co-ordinates
         30, 30,                              // width and height
@@ -246,7 +246,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
         NULL);
 
     hwndButton = CreateWindow(TEXT("button"),                      // The class name required is button
-        TEXT("3"),                  // the caption of the button
+        TEXT("1"),                  // the caption of the button
         WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,  // the styles
         850, 190,                                  // the left and top co-ordinates
         30, 30,                              // width and height
@@ -256,7 +256,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
         NULL);
 
     hwndButton = CreateWindow(TEXT("button"),                      // The class name required is button
-        TEXT("4"),                  // the caption of the button
+        TEXT("0"),                  // the caption of the button
         WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,  // the styles
         850, 225,                                  // the left and top co-ordinates
         30, 30,                              // width and height
@@ -267,7 +267,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
 
     hwndButton = CreateWindow(TEXT("button"),                      // The class name required is button
-        TEXT("1"),                  // the caption of the button
+        TEXT("3"),                  // the caption of the button
         WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,  // the styles
         100, 240,                                  // the left and top co-ordinates
         30, 30,                              // width and height
@@ -287,7 +287,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
         NULL);
 
     hwndButton = CreateWindow(TEXT("button"),                      // The class name required is button
-        TEXT("4"),                  // the caption of the button
+        TEXT("0"),                  // the caption of the button
         WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,  // the styles
         100, 345,                                  // the left and top co-ordinates
         30, 30,                              // width and height
@@ -299,7 +299,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
 
     hwndButton = CreateWindow(TEXT("button"),                      // The class name required is button
-        TEXT("1"),                  // the caption of the button
+        TEXT("3"),                  // the caption of the button
         WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,  // the styles
         850, 340,                                  // the left and top co-ordinates
         30, 30,                              // width and height
@@ -319,7 +319,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
         NULL);
 
     hwndButton = CreateWindow(TEXT("button"),                      // The class name required is button
-        TEXT("3"),                  // the caption of the button
+        TEXT("1"),                  // the caption of the button
         WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,  // the styles
         850, 410,                                  // the left and top co-ordinates
         30, 30,                              // width and height
@@ -455,11 +455,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             HPEN hPenOld;
 
             // 1. pietro
-            HPEN pierwsze;
+            HPEN pietra;
             COLORREF Color1;
             Color1 = RGB(0, 0, 0);
-            pierwsze = CreatePen(PS_SOLID, 5, Color1);
-            hPenOld = (HPEN)SelectObject(hdc, pierwsze);
+            pietra = CreatePen(PS_SOLID, 5, Color1);
+            hPenOld = (HPEN)SelectObject(hdc, pietra);
 
             MoveToEx(hdc, 100, 200, NULL);
             LineTo(hdc, 400, 200);
@@ -477,44 +477,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             MoveToEx(hdc, 590, 100 + 100, NULL);
             LineTo(hdc, 590, 100 - 10);
 
-            SelectObject(hdc, hPenOld);
-            DeleteObject(pierwsze);
-
-            // 2. pietro
-            HPEN drugie;
-            Color1 = RGB(0, 0, 0);
-            drugie = CreatePen(PS_SOLID, 5, Color1);
-            hPenOld = (HPEN)SelectObject(hdc, drugie);
-
             MoveToEx(hdc, 600, 300, NULL);
             LineTo(hdc, 900, 300);
 
-            SelectObject(hdc, hPenOld);
-            DeleteObject(drugie);
-
-            // 3. pietro
-            HPEN trzecie;
-            Color1 = RGB(0, 0, 0);
-            trzecie = CreatePen(PS_SOLID, 5, Color1);
-            hPenOld = (HPEN)SelectObject(hdc, trzecie);
-
             MoveToEx(hdc, 100, 400, NULL);
             LineTo(hdc, 400, 400);
-
-            SelectObject(hdc, hPenOld);
-            DeleteObject(trzecie);
-
-            // 4. pietro
-            HPEN hLinePen;
-            Color1 = RGB(0, 0, 0);
-            hLinePen = CreatePen(PS_SOLID, 5, Color1);
-            hPenOld = (HPEN)SelectObject(hdc, hLinePen);
 
             MoveToEx(hdc, 600, 500, NULL);
             LineTo(hdc, 900, 500);
 
             SelectObject(hdc, hPenOld);
-            DeleteObject(hLinePen);
+            DeleteObject(pietra);
 
             EndPaint(hWnd, &ps);
         }
