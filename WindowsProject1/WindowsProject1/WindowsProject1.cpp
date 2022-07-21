@@ -388,6 +388,16 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 	// create button and store the handle                                                       
 
 	hwndButton = CreateWindow(TEXT("button"),                      // The class name required is button
+		TEXT("RESET"),                  // the caption of the button
+		WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,  // the styles
+		950, 200,                                  // the left and top co-ordinates
+		200, 100,                              // width and height
+		hWnd,                                 // parent window handle
+		(HMENU)ID_BUTTON11,                   // the ID of your button
+		hInstance,                            // the instance of your application
+		NULL);
+
+	hwndButton = CreateWindow(TEXT("button"),                      // The class name required is button
 		TEXT("2"),                  // the caption of the button
 		WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,  // the styles
 		100, 50,                                  // the left and top co-ordinates
@@ -555,6 +565,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 		case IDM_EXIT:
 			DestroyWindow(hWnd);
+			break;
+		case ID_BUTTON11:
+			PrzydzielanieOsob(osoby);
+			rysowanie(hWnd, hdc, ps, AktualnaPozycja, 1, osoby, 0);
+			AktualnaPozycja = 1;
 			break;
 		case ID_BUTTON12:
 			rysowanie(hWnd, hdc, ps, AktualnaPozycja, 1, osoby,0);
