@@ -18,6 +18,8 @@
 #endif
 // Następne wartości domyślne dla nowych obiektów
 
+#define ID_BUTTON11				111
+
 #define ID_BUTTON12				112
 #define ID_BUTTON13				113
 #define ID_BUTTON14				114
