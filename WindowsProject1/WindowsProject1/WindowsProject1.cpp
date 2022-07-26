@@ -43,6 +43,7 @@ void PrzydzielanieOsob(int osoby[4][10]) {
 void WyborMasy(int a) {
 	if (a == 1) liczbaMasy = liczbaMasy + 1;
 	else liczbaMasy = 0;
+	if (liczbaMasy > 11) liczbaMasy = 11;
 }
 
 void ktoPojechal(int osoby[4][10], int y1, int y2){
