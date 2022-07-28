@@ -25,7 +25,7 @@ int AktualnaPozycja = 1;
 int osoby[4][10];
 int liczbaMasy = 0;
 
-LPCTSTR masa[12] = { L"000", L"070",L"140", L"210", L"280", L"350", L"420", L"490", L"560", L"630", L"700", L"MAX" };
+LPCTSTR masa[12] = { L"000", L"070",L"140", L"210", L"280", L"350", L"420", L"490", L"560", L"630", L"700", L"MAX" };    
 
 void PrzydzielanieOsob(int osoby[4][10]) {
 	for (int x = 0; x < 4; x++) {
@@ -33,7 +33,7 @@ void PrzydzielanieOsob(int osoby[4][10]) {
 			osoby[x][y] = rand() % 4;
 
 			if (x == osoby[x][y]) {
-				y = y-1;
+				y = y - 1;
 			}
 
 		}
@@ -46,10 +46,10 @@ void WyborMasy(int a) {
 	if (liczbaMasy > 11) liczbaMasy = 11;
 }
 
-void ktoPojechal(int osoby[4][10], int y1, int y2){
+void ktoPojechal(int osoby[4][10], int y1, int y2) {
 	for (int i = 0; i < 10; i++) {
-		if (osoby[y1 - 1][i] == -2) 
-				osoby[y1 - 1][i] = -1;
+		if (osoby[y1 - 1][i] == -2)
+			osoby[y1 - 1][i] = -1;
 	}
 	WyborMasy(0);
 }
@@ -115,11 +115,11 @@ void rysowanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2, int osoby[4
 				}
 			}
 			//przejazd winda z 1
-			if (y1 == 1 && CzyBracOsoby==1) {
-				for (int j = 0; j < 10;j++) {
+			if (y1 == 1 && CzyBracOsoby == 1) {
+				for (int j = 0; j < 10; j++) {
 					if (osoby[0][j] == -2) {
-						MoveToEx(hdc, 420 + j * 15, 75+i, NULL);
-						LineTo(hdc, 420 + j * 15, 20+i);
+						MoveToEx(hdc, 420 + j * 15, 75 + i, NULL);
+						LineTo(hdc, 420 + j * 15, 20 + i);
 					}
 				}
 			}
@@ -292,6 +292,119 @@ void rysowanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2, int osoby[4
 			EndPaint(hWnd, &ps);
 			Sleep(1);
 		}
+	}
+}
+
+void wchodzenie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y, int osoby[4][10]) {
+
+	int k = y * 100;
+	bool CzyKtosWchodzi = false;
+
+	//sprawdzenie ile czekac
+	for (int i = 0; i < 10; i++) {
+		if (osoby[y - 1][i] == -2) CzyKtosWchodzi = 1;
+	}
+	if (CzyKtosWchodzi == 0) {
+		Sleep(200);
+		return;
+	};
+	//rysowanie wchodzenia
+	for (int i = 200; i <= 420; i++) {
+
+		InvalidateRect(hWnd, NULL, TRUE);
+		hdc = BeginPaint(hWnd, &ps);
+		HPEN hLinePen;
+		COLORREF qLineColor;
+		HPEN hPenOld;
+		qLineColor = RGB(0, 0, 0);
+		hLinePen = CreatePen(PS_SOLID, 2, qLineColor);
+		hPenOld = (HPEN)SelectObject(hdc, hLinePen);
+		LPCWSTR text = L"masa:";
+
+		//masa text
+		TextOut(hdc, 10, 10, text, 5);
+		TextOut(hdc, 10, 30, masa[0], 3);
+
+		//wchodzenie animacja
+		if (y == 1 || y == 3) {
+			for (int j = 0; j < 10; j++) {
+				if (osoby[y - 1][j] == -2) {
+					MoveToEx(hdc, i + j * 15, k + 75, NULL);
+					LineTo(hdc, i + j * 15, k + 20);
+				}
+			}
+		}
+		else
+		{
+			for (int j = 0; j < 10; j++) {
+				if (osoby[y - 1][j] == -2) {
+					MoveToEx(hdc, 850 -i + j * 15, k + 75, NULL);
+					LineTo(hdc, 850 -i + j * 15, k + 20);
+				}
+			}
+		}
+
+		//platforma
+		MoveToEx(hdc, 410, k + 100, NULL);
+		LineTo(hdc, 590, k + 100);
+		MoveToEx(hdc, 410, k - 10, NULL);
+		LineTo(hdc, 590, k - 10);
+		MoveToEx(hdc, 410, k + 100, NULL);
+		LineTo(hdc, 410, k - 10);
+		MoveToEx(hdc, 590, k + 100, NULL);
+		LineTo(hdc, 590, k - 10);
+
+		//pierwsze
+		MoveToEx(hdc, 100, 200, NULL);
+		LineTo(hdc, 400, 200);
+		//drugie
+		MoveToEx(hdc, 600, 300, NULL);
+		LineTo(hdc, 900, 300);
+		//trzecie
+		MoveToEx(hdc, 100, 400, NULL);
+		LineTo(hdc, 400, 400);
+		//czwarte
+		MoveToEx(hdc, 600, 500, NULL);
+		LineTo(hdc, 900, 500);
+
+
+		//osoby z 1
+		for (int j = 0; j < 10; j++) {
+			if (osoby[0][j] > -1) {
+				MoveToEx(hdc, 200 + j * 15, 175, NULL);
+				LineTo(hdc, 200 + j * 15, 120);
+			}
+		}
+
+		//osoby z 2
+		for (int j = 0; j < 10; j++) {
+			if (osoby[1][j] > -1) {
+				MoveToEx(hdc, 660 + j * 15, 275, NULL);
+				LineTo(hdc, 660 + j * 15, 220);
+			}
+		}
+
+		//osoby z 3
+		for (int j = 0; j < 10; j++) {
+			if (osoby[2][j] > -1) {
+				MoveToEx(hdc, 200 + j * 15, 375, NULL);
+				LineTo(hdc, 200 + j * 15, 320);
+			}
+		}
+
+		//osoby z 4       
+		for (int j = 0; j < 10; j++) {
+			if (osoby[3][j] > -1) {
+				MoveToEx(hdc, 660 + j * 15, 475, NULL);
+				LineTo(hdc, 660 + j * 15, 420);
+			}
+		}
+
+		SelectObject(hdc, hPenOld);
+		DeleteObject(hLinePen);
+
+		EndPaint(hWnd, &ps);
+		Sleep(1);
 	}
 }
 
@@ -573,99 +686,99 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			AktualnaPozycja = 1;
 			break;
 		case ID_BUTTON12:
-			rysowanie(hWnd, hdc, ps, AktualnaPozycja, 1, osoby,0);
+			rysowanie(hWnd, hdc, ps, AktualnaPozycja, 1, osoby, 0);
 			AktualnaPozycja = 2;
-			Sleep(200);
 			ktoJedzie(osoby, 1, 2);
-			rysowanie(hWnd, hdc, ps, 1, 2, osoby,1);
+			wchodzenie(hWnd, hdc, ps,1,osoby);
+			rysowanie(hWnd, hdc, ps, 1, 2, osoby, 1);
 			ktoPojechal(osoby, 1, 2);
 			break;
 		case ID_BUTTON13:
-			rysowanie(hWnd, hdc, ps, AktualnaPozycja, 1, osoby,0);
+			rysowanie(hWnd, hdc, ps, AktualnaPozycja, 1, osoby, 0);
 			AktualnaPozycja = 3;
-			Sleep(200);
 			ktoJedzie(osoby, 1, 3);
-			rysowanie(hWnd, hdc, ps, 1, 3, osoby,1);
+			wchodzenie(hWnd, hdc, ps, 1, osoby);
+			rysowanie(hWnd, hdc, ps, 1, 3, osoby, 1);
 			ktoPojechal(osoby, 1, 3);
 			break;
 		case ID_BUTTON14:
-			rysowanie(hWnd, hdc, ps, AktualnaPozycja, 1, osoby,0);
+			rysowanie(hWnd, hdc, ps, AktualnaPozycja, 1, osoby, 0);
 			AktualnaPozycja = 4;
-			Sleep(200);
 			ktoJedzie(osoby, 1, 4);
-			rysowanie(hWnd, hdc, ps, 1, 4, osoby,1);
+			wchodzenie(hWnd, hdc, ps, 1, osoby);
+			rysowanie(hWnd, hdc, ps, 1, 4, osoby, 1);
 			ktoPojechal(osoby, 1, 4);
 			break;
 		case ID_BUTTON21:
-			rysowanie(hWnd, hdc, ps, AktualnaPozycja, 2, osoby,0);
+			rysowanie(hWnd, hdc, ps, AktualnaPozycja, 2, osoby, 0);
 			AktualnaPozycja = 1;
-			Sleep(200);
 			ktoJedzie(osoby, 2, 1);
-			rysowanie(hWnd, hdc, ps, 2, 1, osoby,1);
+			wchodzenie(hWnd, hdc, ps, 2, osoby);
+			rysowanie(hWnd, hdc, ps, 2, 1, osoby, 1);
 			ktoPojechal(osoby, 2, 1);
 			break;
 		case ID_BUTTON23:
-			rysowanie(hWnd, hdc, ps, AktualnaPozycja, 2, osoby,0);
+			rysowanie(hWnd, hdc, ps, AktualnaPozycja, 2, osoby, 0);
 			AktualnaPozycja = 3;
-			Sleep(200);
 			ktoJedzie(osoby, 2, 3);
-			rysowanie(hWnd, hdc, ps, 2, 3, osoby,1);
+			wchodzenie(hWnd, hdc, ps, 2, osoby);
+			rysowanie(hWnd, hdc, ps, 2, 3, osoby, 1);
 			ktoPojechal(osoby, 2, 3);
 			break;
 		case ID_BUTTON24:
-			rysowanie(hWnd, hdc, ps, AktualnaPozycja, 2, osoby,0);
+			rysowanie(hWnd, hdc, ps, AktualnaPozycja, 2, osoby, 0);
 			AktualnaPozycja = 4;
-			Sleep(200);
 			ktoJedzie(osoby, 2, 4);
-			rysowanie(hWnd, hdc, ps, 2, 4, osoby,1);
+			wchodzenie(hWnd, hdc, ps, 2, osoby);
+			rysowanie(hWnd, hdc, ps, 2, 4, osoby, 1);
 			ktoPojechal(osoby, 2, 4);
 			break;
 		case ID_BUTTON31:
-			rysowanie(hWnd, hdc, ps, AktualnaPozycja, 3, osoby,0);
+			rysowanie(hWnd, hdc, ps, AktualnaPozycja, 3, osoby, 0);
 			AktualnaPozycja = 1;
-			Sleep(200);
 			ktoJedzie(osoby, 3, 1);
-			rysowanie(hWnd, hdc, ps, 3, 1, osoby,1);
+			wchodzenie(hWnd, hdc, ps, 3, osoby);
+			rysowanie(hWnd, hdc, ps, 3, 1, osoby, 1);
 			ktoPojechal(osoby, 3, 1);
 			break;
 		case ID_BUTTON32:
-			rysowanie(hWnd, hdc, ps, AktualnaPozycja, 3, osoby,0);
+			rysowanie(hWnd, hdc, ps, AktualnaPozycja, 3, osoby, 0);
 			AktualnaPozycja = 2;
-			Sleep(200);
 			ktoJedzie(osoby, 3, 2);
-			rysowanie(hWnd, hdc, ps, 3, 2, osoby,1);
+			wchodzenie(hWnd, hdc, ps, 3, osoby);
+			rysowanie(hWnd, hdc, ps, 3, 2, osoby, 1);
 			ktoPojechal(osoby, 3, 2);
 			break;
 		case ID_BUTTON34:
-			rysowanie(hWnd, hdc, ps, AktualnaPozycja, 3, osoby,0);
+			rysowanie(hWnd, hdc, ps, AktualnaPozycja, 3, osoby, 0);
 			AktualnaPozycja = 4;
-			Sleep(200);
 			ktoJedzie(osoby, 3, 4);
-			rysowanie(hWnd, hdc, ps, 3, 4, osoby,1);
+			wchodzenie(hWnd, hdc, ps, 3, osoby);
+			rysowanie(hWnd, hdc, ps, 3, 4, osoby, 1);
 			ktoPojechal(osoby, 3, 4);
 			break;
 		case ID_BUTTON41:
-			rysowanie(hWnd, hdc, ps, AktualnaPozycja, 4, osoby,0);
+			rysowanie(hWnd, hdc, ps, AktualnaPozycja, 4, osoby, 0);
 			AktualnaPozycja = 1;
-			Sleep(200);
 			ktoJedzie(osoby, 4, 1);
-			rysowanie(hWnd, hdc, ps, 4, 1, osoby,1);
+			wchodzenie(hWnd, hdc, ps, 4, osoby);
+			rysowanie(hWnd, hdc, ps, 4, 1, osoby, 1);
 			ktoPojechal(osoby, 4, 1);
 			break;
 		case ID_BUTTON42:
-			rysowanie(hWnd, hdc, ps, AktualnaPozycja, 4, osoby,0);
+			rysowanie(hWnd, hdc, ps, AktualnaPozycja, 4, osoby, 0);
 			AktualnaPozycja = 2;
-			Sleep(200);
 			ktoJedzie(osoby, 4, 2);
-			rysowanie(hWnd, hdc, ps, 4, 2, osoby,1);
+			wchodzenie(hWnd, hdc, ps, 4, osoby);
+			rysowanie(hWnd, hdc, ps, 4, 2, osoby, 1);
 			ktoPojechal(osoby, 4, 2);
 			break;
 		case ID_BUTTON43:
-			rysowanie(hWnd, hdc, ps, AktualnaPozycja, 4, osoby,0);
+			rysowanie(hWnd, hdc, ps, AktualnaPozycja, 4, osoby, 0);
 			AktualnaPozycja = 3;
-			Sleep(200);
 			ktoJedzie(osoby, 4, 3);
-			rysowanie(hWnd, hdc, ps, 4, 3, osoby,1);
+			wchodzenie(hWnd, hdc, ps, 4, osoby);
+			rysowanie(hWnd, hdc, ps, 4, 3, osoby, 1);
 			ktoPojechal(osoby, 4, 3);
 			break;
 		default:
