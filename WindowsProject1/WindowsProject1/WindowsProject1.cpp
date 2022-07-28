@@ -25,7 +25,7 @@ int AktualnaPozycja = 1;
 int osoby[4][10];
 int liczbaMasy = 0;
 
-LPCTSTR masa[12] = { L"000", L"070",L"140", L"210", L"280", L"350", L"420", L"490", L"560", L"630", L"700", L"MAX" };    
+LPCTSTR masa[12] = { L"000", L"070",L"140", L"210", L"280", L"350", L"420", L"490", L"560", L"MAX", L"MAX", L"MAX" };
 
 void PrzydzielanieOsob(int osoby[4][10]) {
 	for (int x = 0; x < 4; x++) {
@@ -338,8 +338,8 @@ void wchodzenie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y, int osoby[4][10]) {
 		{
 			for (int j = 0; j < 10; j++) {
 				if (osoby[y - 1][j] == -2) {
-					MoveToEx(hdc, 850 -i + j * 15, k + 75, NULL);
-					LineTo(hdc, 850 -i + j * 15, k + 20);
+					MoveToEx(hdc, 850 - i + j * 15, k + 75, NULL);
+					LineTo(hdc, 850 - i + j * 15, k + 20);
 				}
 			}
 		}
@@ -689,7 +689,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			rysowanie(hWnd, hdc, ps, AktualnaPozycja, 1, osoby, 0);
 			AktualnaPozycja = 2;
 			ktoJedzie(osoby, 1, 2);
-			wchodzenie(hWnd, hdc, ps,1,osoby);
+			wchodzenie(hWnd, hdc, ps, 1, osoby);
 			rysowanie(hWnd, hdc, ps, 1, 2, osoby, 1);
 			ktoPojechal(osoby, 1, 2);
 			break;
