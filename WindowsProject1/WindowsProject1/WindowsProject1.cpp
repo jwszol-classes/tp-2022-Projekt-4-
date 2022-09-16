@@ -22,14 +22,15 @@ LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
 int AktualnaPozycja = 1;
-int osoby[4][10];
+int osoby[4][11];
 int liczbaMasy = 0;
+int liczbaOsob = 5;
 
 LPCTSTR masa[12] = { L"000", L"070",L"140", L"210", L"280", L"350", L"420", L"490", L"560", L"MAX", L"MAX", L"MAX" };
 
-void PrzydzielanieOsob(int osoby[4][10]) {
+void PrzydzielanieOsob(int osoby[4][11]) {
 	for (int x = 0; x < 4; x++) {
-		for (int y = 0; y < 10; y++) {
+		for (int y = 0; y < liczbaOsob; y++) {
 			osoby[x][y] = rand() % 4;
 
 			if (x == osoby[x][y]) {
@@ -46,16 +47,16 @@ void WyborMasy(int a) {
 	if (liczbaMasy > 11) liczbaMasy = 11;
 }
 
-void ktoPojechal(int osoby[4][10], int y1, int y2) {
-	for (int i = 0; i < 10; i++) {
+void ktoPojechal(int osoby[4][11], int y1, int y2) {
+	for (int i = 0; i < liczbaOsob; i++) {
 		if (osoby[y1 - 1][i] == -2)
 			osoby[y1 - 1][i] = -1;
 	}
 	WyborMasy(0);
 }
 
-void ktoJedzie(int osoby[4][10], int y1, int y2) {
-	for (int i = 0; i < 10; i++) {
+void ktoJedzie(int osoby[4][11], int y1, int y2) {
+	for (int i = 0; i < liczbaOsob; i++) {
 		if (osoby[y1 - 1][i] != -1)
 			if (osoby[y1 - 1][i] == y2 - 1) {
 				osoby[y1 - 1][i] = -2;
@@ -65,7 +66,7 @@ void ktoJedzie(int osoby[4][10], int y1, int y2) {
 
 }
 
-void rysowanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2, int osoby[4][10], bool CzyBracOsoby) {
+void rysowanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2, int osoby[4][11], bool CzyBracOsoby) {
 
 	if (y2 > y1) {
 		for (int i = y1 * 100; i < y2 * 100; i++) {
@@ -108,7 +109,7 @@ void rysowanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2, int osoby[4
 
 
 			//osoby z 1
-			for (int j = 0; j < 10; j++) {
+			for (int j = 0; j < liczbaOsob; j++) {
 				if (osoby[0][j] > -1) {
 					MoveToEx(hdc, 200 + j * 15, 175, NULL);
 					LineTo(hdc, 200 + j * 15, 120);
@@ -116,7 +117,7 @@ void rysowanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2, int osoby[4
 			}
 			//przejazd winda z 1
 			if (y1 == 1 && CzyBracOsoby == 1) {
-				for (int j = 0; j < 10; j++) {
+				for (int j = 0; j < liczbaOsob; j++) {
 					if (osoby[0][j] == -2) {
 						MoveToEx(hdc, 420 + j * 15, 75 + i, NULL);
 						LineTo(hdc, 420 + j * 15, 20 + i);
@@ -126,7 +127,7 @@ void rysowanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2, int osoby[4
 
 
 			//osoby z 2
-			for (int j = 0; j < 10; j++) {
+			for (int j = 0; j < liczbaOsob; j++) {
 				if (osoby[1][j] > -1) {
 					MoveToEx(hdc, 660 + j * 15, 275, NULL);
 					LineTo(hdc, 660 + j * 15, 220);
@@ -134,7 +135,7 @@ void rysowanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2, int osoby[4
 			}
 			//przejazd winda z 2
 			if (y1 == 2 && CzyBracOsoby == 1) {
-				for (int j = 0; j < 10; j++) {
+				for (int j = 0; j < liczbaOsob; j++) {
 					if (osoby[1][j] == -2) {
 						MoveToEx(hdc, 420 + j * 15, 75 + i, NULL);
 						LineTo(hdc, 420 + j * 15, 20 + i);
@@ -142,7 +143,7 @@ void rysowanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2, int osoby[4
 				}
 			}
 			//osoby z 3
-			for (int j = 0; j < 10; j++) {
+			for (int j = 0; j < liczbaOsob; j++) {
 				if (osoby[2][j] > -1) {
 					MoveToEx(hdc, 200 + j * 15, 375, NULL);
 					LineTo(hdc, 200 + j * 15, 320);
@@ -150,7 +151,7 @@ void rysowanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2, int osoby[4
 			}
 			//przejazd winda z 3
 			if (y1 == 3 && CzyBracOsoby == 1) {
-				for (int j = 0; j < 10; j++) {
+				for (int j = 0; j < liczbaOsob; j++) {
 					if (osoby[2][j] == -2) {
 						MoveToEx(hdc, 420 + j * 15, 75 + i, NULL);
 						LineTo(hdc, 420 + j * 15, 20 + i);
@@ -158,7 +159,7 @@ void rysowanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2, int osoby[4
 				}
 			}
 			//osoby z 4       
-			for (int j = 0; j < 10; j++) {
+			for (int j = 0; j < liczbaOsob; j++) {
 				if (osoby[3][j] > -1) {
 					MoveToEx(hdc, 660 + j * 15, 475, NULL);
 					LineTo(hdc, 660 + j * 15, 420);
@@ -166,7 +167,7 @@ void rysowanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2, int osoby[4
 			}
 			//przejazd winda z 4
 			if (y1 == 4 && CzyBracOsoby == 1) {
-				for (int j = 0; j < 10; j++) {
+				for (int j = 0; j < liczbaOsob; j++) {
 					if (osoby[3][j] == -2) {
 						MoveToEx(hdc, 420 + j * 15, 75 + i, NULL);
 						LineTo(hdc, 420 + j * 15, 20 + i);
@@ -221,7 +222,7 @@ void rysowanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2, int osoby[4
 
 
 			//osoby z 1
-			for (int j = 0; j < 10; j++) {
+			for (int j = 0; j < liczbaOsob; j++) {
 				if (osoby[0][j] > -1) {
 					MoveToEx(hdc, 200 + j * 15, 175, NULL);
 					LineTo(hdc, 200 + j * 15, 120);
@@ -229,7 +230,7 @@ void rysowanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2, int osoby[4
 			}
 			//przejazd winda z 1
 			if (y1 == 1 && CzyBracOsoby == 1) {
-				for (int j = 0; j < 10; j++) {
+				for (int j = 0; j < liczbaOsob; j++) {
 					if (osoby[0][j] == -2) {
 						MoveToEx(hdc, 420 + j * 15, 75 + i, NULL);
 						LineTo(hdc, 420 + j * 15, 20 + i);
@@ -239,7 +240,7 @@ void rysowanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2, int osoby[4
 
 
 			//osoby z 2
-			for (int j = 0; j < 10; j++) {
+			for (int j = 0; j < liczbaOsob; j++) {
 				if (osoby[1][j] > -1) {
 					MoveToEx(hdc, 660 + j * 15, 275, NULL);
 					LineTo(hdc, 660 + j * 15, 220);
@@ -247,7 +248,7 @@ void rysowanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2, int osoby[4
 			}
 			//przejazd winda z 2
 			if (y1 == 2 && CzyBracOsoby == 1) {
-				for (int j = 0; j < 10; j++) {
+				for (int j = 0; j < liczbaOsob; j++) {
 					if (osoby[1][j] == -2) {
 						MoveToEx(hdc, 420 + j * 15, 75 + i, NULL);
 						LineTo(hdc, 420 + j * 15, 20 + i);
@@ -255,7 +256,7 @@ void rysowanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2, int osoby[4
 				}
 			}
 			//osoby z 3
-			for (int j = 0; j < 10; j++) {
+			for (int j = 0; j < liczbaOsob; j++) {
 				if (osoby[2][j] > -1) {
 					MoveToEx(hdc, 200 + j * 15, 375, NULL);
 					LineTo(hdc, 200 + j * 15, 320);
@@ -263,7 +264,7 @@ void rysowanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2, int osoby[4
 			}
 			//przejazd winda z 3
 			if (y1 == 3 && CzyBracOsoby == 1) {
-				for (int j = 0; j < 10; j++) {
+				for (int j = 0; j < liczbaOsob; j++) {
 					if (osoby[2][j] == -2) {
 						MoveToEx(hdc, 420 + j * 15, 75 + i, NULL);
 						LineTo(hdc, 420 + j * 15, 20 + i);
@@ -271,7 +272,7 @@ void rysowanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2, int osoby[4
 				}
 			}
 			//osoby z 4       
-			for (int j = 0; j < 10; j++) {
+			for (int j = 0; j < liczbaOsob; j++) {
 				if (osoby[3][j] > -1) {
 					MoveToEx(hdc, 660 + j * 15, 475, NULL);
 					LineTo(hdc, 660 + j * 15, 420);
@@ -279,7 +280,7 @@ void rysowanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2, int osoby[4
 			}
 			//przejazd winda z 4
 			if (y1 == 4 && CzyBracOsoby == 1) {
-				for (int j = 0; j < 10; j++) {
+				for (int j = 0; j < liczbaOsob; j++) {
 					if (osoby[3][j] == -2) {
 						MoveToEx(hdc, 420 + j * 15, 75 + i, NULL);
 						LineTo(hdc, 420 + j * 15, 20 + i);
@@ -295,13 +296,93 @@ void rysowanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2, int osoby[4
 	}
 }
 
-void wchodzenie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y, int osoby[4][10]) {
+void reset(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2, int osoby[4][11], bool CzyBracOsoby) {
+
+	InvalidateRect(hWnd, NULL, TRUE);
+	hdc = BeginPaint(hWnd, &ps);
+	HPEN hLinePen;
+	COLORREF qLineColor;
+	HPEN hPenOld;
+	qLineColor = RGB(0, 0, 0);
+	hLinePen = CreatePen(PS_SOLID, 2, qLineColor);
+	hPenOld = (HPEN)SelectObject(hdc, hLinePen);
+	LPCWSTR text = L"masa:";
+
+	//masa text
+	TextOut(hdc, 10, 10, text, 5);
+	TextOut(hdc, 10, 30, masa[liczbaMasy], 3);
+
+	//platforma
+	MoveToEx(hdc, 410, 200, NULL);
+	LineTo(hdc, 590, 200);
+	MoveToEx(hdc, 410, 90, NULL);
+	LineTo(hdc, 590, 90);
+	MoveToEx(hdc, 410, 200, NULL);
+	LineTo(hdc, 410, 90);
+	MoveToEx(hdc, 590, 200, NULL);
+	LineTo(hdc, 590, 90);
+
+	//pierwsze
+	MoveToEx(hdc, 100, 200, NULL);
+	LineTo(hdc, 400, 200);
+	//drugie
+	MoveToEx(hdc, 600, 300, NULL);
+	LineTo(hdc, 900, 300);
+	//trzecie
+	MoveToEx(hdc, 100, 400, NULL);
+	LineTo(hdc, 400, 400);
+	//czwarte
+	MoveToEx(hdc, 600, 500, NULL);
+	LineTo(hdc, 900, 500);
+
+
+	//osoby z 1
+	for (int j = 0; j < liczbaOsob; j++) {
+		if (osoby[0][j] > -1) {
+			MoveToEx(hdc, 200 + j * 15, 175, NULL);
+			LineTo(hdc, 200 + j * 15, 120);
+		}
+	}
+
+	//osoby z 2
+	for (int j = 0; j < liczbaOsob; j++) {
+		if (osoby[1][j] > -1) {
+			MoveToEx(hdc, 660 + j * 15, 275, NULL);
+			LineTo(hdc, 660 + j * 15, 220);
+		}
+	}
+
+	//osoby z 3
+	for (int j = 0; j < liczbaOsob; j++) {
+		if (osoby[2][j] > -1) {
+			MoveToEx(hdc, 200 + j * 15, 375, NULL);
+			LineTo(hdc, 200 + j * 15, 320);
+		}
+	}
+
+	//osoby z 4       
+	for (int j = 0; j < liczbaOsob; j++) {
+		if (osoby[3][j] > -1) {
+			MoveToEx(hdc, 660 + j * 15, 475, NULL);
+			LineTo(hdc, 660 + j * 15, 420);
+		}
+	}
+
+	SelectObject(hdc, hPenOld);
+	DeleteObject(hLinePen);
+
+	EndPaint(hWnd, &ps);
+
+}
+
+
+void wchodzenie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y, int osoby[4][11]) {
 
 	int k = y * 100;
 	bool CzyKtosWchodzi = false;
 
 	//sprawdzenie ile czekac
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < liczbaOsob; i++) {
 		if (osoby[y - 1][i] == -2) CzyKtosWchodzi = 1;
 	}
 	if (CzyKtosWchodzi == 0) {
@@ -327,7 +408,7 @@ void wchodzenie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y, int osoby[4][10]) {
 
 		//wchodzenie animacja
 		if (y == 1 || y == 3) {
-			for (int j = 0; j < 10; j++) {
+			for (int j = 0; j < liczbaOsob; j++) {
 				if (osoby[y - 1][j] == -2) {
 					MoveToEx(hdc, i + j * 15, k + 75, NULL);
 					LineTo(hdc, i + j * 15, k + 20);
@@ -336,7 +417,7 @@ void wchodzenie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y, int osoby[4][10]) {
 		}
 		else
 		{
-			for (int j = 0; j < 10; j++) {
+			for (int j = 0; j < liczbaOsob; j++) {
 				if (osoby[y - 1][j] == -2) {
 					MoveToEx(hdc, 850 - i + j * 15, k + 75, NULL);
 					LineTo(hdc, 850 - i + j * 15, k + 20);
@@ -369,7 +450,7 @@ void wchodzenie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y, int osoby[4][10]) {
 
 
 		//osoby z 1
-		for (int j = 0; j < 10; j++) {
+		for (int j = 0; j < liczbaOsob; j++) {
 			if (osoby[0][j] > -1) {
 				MoveToEx(hdc, 200 + j * 15, 175, NULL);
 				LineTo(hdc, 200 + j * 15, 120);
@@ -377,7 +458,7 @@ void wchodzenie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y, int osoby[4][10]) {
 		}
 
 		//osoby z 2
-		for (int j = 0; j < 10; j++) {
+		for (int j = 0; j < liczbaOsob; j++) {
 			if (osoby[1][j] > -1) {
 				MoveToEx(hdc, 660 + j * 15, 275, NULL);
 				LineTo(hdc, 660 + j * 15, 220);
@@ -385,7 +466,7 @@ void wchodzenie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y, int osoby[4][10]) {
 		}
 
 		//osoby z 3
-		for (int j = 0; j < 10; j++) {
+		for (int j = 0; j < liczbaOsob; j++) {
 			if (osoby[2][j] > -1) {
 				MoveToEx(hdc, 200 + j * 15, 375, NULL);
 				LineTo(hdc, 200 + j * 15, 320);
@@ -393,7 +474,7 @@ void wchodzenie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y, int osoby[4][10]) {
 		}
 
 		//osoby z 4       
-		for (int j = 0; j < 10; j++) {
+		for (int j = 0; j < liczbaOsob; j++) {
 			if (osoby[3][j] > -1) {
 				MoveToEx(hdc, 660 + j * 15, 475, NULL);
 				LineTo(hdc, 660 + j * 15, 420);
@@ -499,13 +580,33 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 	hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, NULL, NULL, hInstance, NULL);
 
-	// create button and store the handle                                                       
+	// create button and store the handle        
+
+	hwndButton = CreateWindow(TEXT("button"),                      // The class name required is button
+		TEXT("Mniej osob na pietro (min 1)"),                  // the caption of the button
+		WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,  // the styles
+		950, 410,                                  // the left and top co-ordinates
+		250, 60,                              // width and height
+		hWnd,                                 // parent window handle
+		(HMENU)ID_BUTTON1,                   // the ID of your button
+		hInstance,                            // the instance of your application
+		NULL);
+
+	hwndButton = CreateWindow(TEXT("button"),                      // The class name required is button
+		TEXT("Wiecej osob na pietro (max 11)"),                  // the caption of the button
+		WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,  // the styles
+		950, 330,                                  // the left and top co-ordinates
+		250, 60,                              // width and height
+		hWnd,                                 // parent window handle
+		(HMENU)ID_BUTTON2,                   // the ID of your button
+		hInstance,                            // the instance of your application
+		NULL);
 
 	hwndButton = CreateWindow(TEXT("button"),                      // The class name required is button
 		TEXT("RESET"),                  // the caption of the button
 		WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,  // the styles
 		950, 200,                                  // the left and top co-ordinates
-		200, 100,                              // width and height
+		250, 100,                              // width and height
 		hWnd,                                 // parent window handle
 		(HMENU)ID_BUTTON11,                   // the ID of your button
 		hInstance,                            // the instance of your application
@@ -680,9 +781,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case IDM_EXIT:
 			DestroyWindow(hWnd);
 			break;
+		case ID_BUTTON1:
+			if (liczbaOsob > 1) liczbaOsob--;
+			PrzydzielanieOsob(osoby);
+			reset(hWnd, hdc, ps, AktualnaPozycja, 1, osoby, 0);
+			AktualnaPozycja = 1;
+			break;
+		case ID_BUTTON2:
+			if (liczbaOsob < 11) liczbaOsob++;
+			PrzydzielanieOsob(osoby);
+			reset(hWnd, hdc, ps, AktualnaPozycja, 1, osoby, 0);
+			AktualnaPozycja = 1;
+			break;
 		case ID_BUTTON11:
 			PrzydzielanieOsob(osoby);
-			rysowanie(hWnd, hdc, ps, AktualnaPozycja, 1, osoby, 0);
+			reset(hWnd, hdc, ps, AktualnaPozycja, 1, osoby, 0);
 			AktualnaPozycja = 1;
 			break;
 		case ID_BUTTON12:
@@ -824,27 +937,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 
 		//osoby z 1
-		for (int j = 0; j < 10; j++) {
+		for (int j = 0; j < liczbaOsob; j++) {
 			if (osoby[0][j] > -1) {
 				MoveToEx(hdc, 200 + j * 15, 175, NULL);
 				LineTo(hdc, 200 + j * 15, 120);
 			}
 		}
 		//osoby z 2
-		for (int j = 0; j < 10; j++) {
+		for (int j = 0; j < liczbaOsob; j++) {
 			if (osoby[1][j] > -1) {
 				MoveToEx(hdc, 660 + j * 15, 275, NULL);
 				LineTo(hdc, 660 + j * 15, 220);
 			}
 		}
-		for (int j = 0; j < 10; j++) {
+		for (int j = 0; j < liczbaOsob; j++) {
 			if (osoby[2][j] > -1) {
 				MoveToEx(hdc, 200 + j * 15, 375, NULL);
 				LineTo(hdc, 200 + j * 15, 320);
 			}
 		}
 		//osoby z 4       
-		for (int j = 0; j < 10; j++) {
+		for (int j = 0; j < liczbaOsob; j++) {
 			if (osoby[3][j] > -1) {
 				MoveToEx(hdc, 660 + j * 15, 475, NULL);
 				LineTo(hdc, 660 + j * 15, 420);
