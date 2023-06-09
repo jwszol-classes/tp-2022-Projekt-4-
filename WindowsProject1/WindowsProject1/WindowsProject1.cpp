@@ -25,6 +25,10 @@ int AktualnaPozycja = 1;
 int osoby[4][11];
 int liczbaMasy = 0;
 int liczbaOsob = 5;
+bool zjazd0 = false;
+
+// Zmienna przechowująca czas ostatniej aktywności
+static DWORD lastActivityTime = 0;
 
 LPCTSTR masa[12] = { L"000", L"070",L"140", L"210", L"280", L"350", L"420", L"490", L"560", L"MAX", L"MAX", L"MAX" };
 
@@ -179,6 +183,7 @@ void rysowanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2, int osoby[4
 
 			EndPaint(hWnd, &ps);
 			Sleep(1);
+			lastActivityTime = GetTickCount();
 		}
 	}
 	else {
@@ -292,6 +297,7 @@ void rysowanie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2, int osoby[4
 
 			EndPaint(hWnd, &ps);
 			Sleep(1);
+			lastActivityTime = GetTickCount();
 		}
 	}
 }
@@ -375,7 +381,6 @@ void reset(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y1, int y2, int osoby[4][11
 
 }
 
-
 void wchodzenie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y, int osoby[4][11]) {
 
 	int k = y * 100;
@@ -387,6 +392,7 @@ void wchodzenie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y, int osoby[4][11]) {
 	}
 	if (CzyKtosWchodzi == 0) {
 		Sleep(200);
+		lastActivityTime = GetTickCount();
 		return;
 	};
 	//rysowanie wchodzenia
@@ -486,6 +492,7 @@ void wchodzenie(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, int y, int osoby[4][11]) {
 
 		EndPaint(hWnd, &ps);
 		Sleep(1);
+		lastActivityTime = GetTickCount();
 	}
 }
 
@@ -517,6 +524,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_WINDOWSPROJECT1));
 
 	MSG msg;
+
 
 	// Główna pętla komunikatów:
 	while (GetMessage(&msg, nullptr, 0, 0))
@@ -579,6 +587,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 	// main window
 	hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, NULL, NULL, hInstance, NULL);
+
+	SetTimer(hWnd, 1, 1000, NULL);
 
 	// create button and store the handle        
 
@@ -769,9 +779,25 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 	switch (message)
 	{
+	case WM_CREATE:
+		// Inicjalizacja czasu ostatniej aktywności
+		lastActivityTime = GetTickCount();
+		break;
+	case WM_TIMER:
+		// Sprawdzanie, czy minęło 10 sekund od ostatniej aktywności
+		if ((GetTickCount() - lastActivityTime) > 5000)
+		{
+			lastActivityTime = GetTickCount();
+			// Implementacja funkcji B
+			rysowanie(hWnd, hdc, ps, AktualnaPozycja, 4, osoby, 0);
+			AktualnaPozycja = 4;
+			
+		}
+		break;
 	case WM_COMMAND:
 	{
 		int wmId = LOWORD(wParam);
+		lastActivityTime = GetTickCount();
 		// Analizuj zaznaczenia menu:
 		switch (wmId)
 		{
